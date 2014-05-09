@@ -33,25 +33,30 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-    [self.navigationController.navigationBar setBackgroundColor:[UIColor redColor]];
-    
+//    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+//    [self.navigationController.navigationBar setBackgroundColor:[UIColor redColor]];
+//    
     
     self.title = @"root";
-    self.view.backgroundColor = [UIColor greenColor];
+//    self.view.backgroundColor = [UIColor greenColor];
     for (int i = 0; i < 5; i ++) {
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setFrame:CGRectMake(100, 100+60*i, 100, 50)];
-        [button setTitle:[NSString stringWithFormat:@"下一步，\n请点击这里 %d",i] forState:UIControlStateNormal];
+        [button setTitle:[NSString stringWithFormat:@"下一步\n请点这里 %d",i] forState:UIControlStateNormal];
+        [button setTitle:[NSString stringWithFormat:@"很好\n你选中了 %d",i] forState:UIControlStateSelected];
+//        button.highlighted = NO;
         button.titleLabel.textAlignment = NSTextAlignmentCenter;
         button.titleLabel.numberOfLines = 2;
         button.titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
-        
+        [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+//        button.titleLabel.backgroundColor = [UIColor greenColor];
+//        button.titleLabel.shadowColor = [UIColor grayColor];
         [button setBackgroundColor:[UIColor magentaColor]];
         [button setTag:BUTTON_TAG +i];
         //显示圆角
         button.clipsToBounds = YES;
-        button.layer.cornerRadius = 5;
+        button.layer.cornerRadius = 10;
         //加边框线
         button.layer.borderWidth = 1;
         button.layer.borderColor = [UIColor blackColor].CGColor;
@@ -64,6 +69,10 @@
 
 -(void)buttonClicked:(UIButton *)btn {
     NSLog(@"btn.tag = %d",btn.tag);
+    btn.selected = !btn.selected;
+    NSLog(@"title %@",[btn titleForState:btn.selected?UIControlStateSelected:UIControlStateNormal]);
+    
+    return ;
     CATransition *mCATAnimation = [CATransition animation];
     [mCATAnimation setType:@"pageCurl"];
     
